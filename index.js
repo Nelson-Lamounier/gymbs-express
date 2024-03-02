@@ -3,8 +3,6 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const mysqlConnect = require("./util/database");
-
 const app = express();
 
 const adminRoutes = require("./routes/admin");
@@ -20,10 +18,6 @@ app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, "public", "error.html"));
 });
 
-mysqlConnect(() => {
-  app.listen(3000);
-});
-
 // MySQL connection
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,8 +29,8 @@ app.use(express.static(__dirname + "/../frontend"));
 // MySQL connection
 const db = mysql.createConnection({
   host: "localhost",
-  user: "sqluser", // Change it to your MySQL credentials
-  password: "123456789", // Change it to your MySQL credentials
+  user: "root", // Change it to your MySQL credentials
+  password: "root", // Change it to your MySQL credentials
   database: "gymbs",
 });
 
@@ -109,8 +103,6 @@ app.use((req, res) => {
 app.listen(5555, () => {
   console.log("Listening on port 5555.");
 });
-
-module.exports = mysqlConnect;
 
 app.listen(3000, () => {
   console.log("Server started on http:localhost:3000");
